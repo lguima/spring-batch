@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: job
+
+  batch:
+    job:
+      # Disable job execution on startup
+      enabled: false
+
+job:
+  scheduling:
+    # Run every 10 seconds
+    cron: 10 * * * * *
+  retry:
+    maxAttempts: 2
+    delay: 500
+    maxDelay: 100
