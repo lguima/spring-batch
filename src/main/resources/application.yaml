@@ -1,4 +1,11 @@
+server:
+  port:
+    ${random.int(8080,9090)}
+
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   application:
     name: job
 
@@ -7,10 +14,21 @@ spring:
       # Disable job execution on startup
       enabled: false
 
+logging:
+  level:
+    com.batch.job: ${LOGGING_LEVEL_SELF:DEBUG}
+
 job:
   scheduling:
-    # Run every 10 seconds
-    cron: 10 * * * * *
+    # Run every 5 seconds
+    cron: 5 * * * * *
+  lock:
+    releaseTimeDuration: ${LOCK_RELEASE_TIME_DURATION:15}
+    redis:
+      registryKey: ${LOCK_REDIS_REGISTRY_KEY:lock00}
+      hostname: ${LOCK_REDIS_HOSTNAME:localhost}
+      port: ${LOCK_REDIS_PORT:6379}
+      database: ${LOCK_REDIS_DATABASE:0}
   retry:
     maxAttempts: 2
     delay: 500
