@@ -16,7 +16,7 @@ import java.util.random.RandomGenerator;
 @Configuration
 @EnableRetry
 @Slf4j
-public class FileDeletingTasklet implements Tasklet, InitializingBean {
+public class SampleTasklet implements Tasklet, InitializingBean {
 
   @Retryable(maxAttemptsExpression = "${job.retry.maxAttempts}", backoff = @Backoff(delayExpression = "${job.retry.delay}", maxDelayExpression = "${job.retry.maxDelay}"))
   public RepeatStatus execute(StepContribution contribution,
