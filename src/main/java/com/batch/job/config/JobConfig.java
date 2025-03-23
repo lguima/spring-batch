@@ -1,6 +1,6 @@
 package com.batch.job.config;
 
-import com.batch.job.job.FileDeletingTasklet;
+import com.batch.job.job.SampleTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -21,9 +21,9 @@ public class JobConfig {
   }
 
   @Bean
-  public Step deleteFilesInDir(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-    return new StepBuilder("deleteFilesInDir", jobRepository)
-      .tasklet(new FileDeletingTasklet(), transactionManager)
+  public Step sampleStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    return new StepBuilder("sampleStep", jobRepository)
+      .tasklet(new SampleTasklet(), transactionManager)
       .build();
   }
 }
