@@ -23,10 +23,10 @@ public class LockConfig {
   @Value("${job.lock.redis.database}")
   private Integer database;
 
-  @Value("${job.lock.redis.registryKey}")
+  @Value("${job.lock.registryKey}")
   private String registryKey;
 
-  @Value("${job.lock.redis.releaseTimeDuration}")
+  @Value("${job.lock.releaseTimeDuration}")
   private Integer releaseTimeDuration;
 
   @Bean
