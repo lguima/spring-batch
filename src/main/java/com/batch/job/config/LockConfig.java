@@ -1,5 +1,6 @@
 package com.batch.job.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -13,15 +14,27 @@ import java.time.Duration;
 
 @Configuration
 public class LockConfig {
-  private static final String LOCK_REGISTRY_REDIS_KEY = "lock00";
-  private static final Duration RELEASE_TIME_DURATION = Duration.ofSeconds(15);
+  @Value("${job.lock.redis.hostname}")
+  private String hostname;
+
+  @Value("${job.lock.redis.port}")
+  private Integer port;
+
+  @Value("${job.lock.redis.database}")
+  private Integer database;
+
+  @Value("${job.lock.redis.registryKey}")
+  private String registryKey;
+
+  @Value("${job.lock.redis.releaseTimeDuration}")
+  private Integer releaseTimeDuration;
 
   @Bean
   JedisConnectionFactory jedisConnectionFactory() {
     RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-    configuration.setHostName("localhost");
-    configuration.setPort(6379);
-    configuration.setDatabase(0);
+    configuration.setHostName(hostname);
+    configuration.setPort(port);
+    configuration.setDatabase(database);
 
     return new JedisConnectionFactory(configuration);
   }
@@ -37,8 +50,8 @@ public class LockConfig {
   public ExpirableLockRegistry lockRegistry(RedisConnectionFactory redisConnectionFactory) {
     return new RedisLockRegistry(
       redisConnectionFactory,
-      LOCK_REGISTRY_REDIS_KEY,
-      RELEASE_TIME_DURATION.toMillis()
+      registryKey,
+      Duration.ofSeconds(releaseTimeDuration).toMillis()
     );
   }
 }

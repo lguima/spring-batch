@@ -23,12 +23,12 @@ job:
     # Run every 5 seconds
     cron: 5 * * * * *
   lock:
-    releaseTimeDuration: ${LOCK_RELEASE_TIME_DURATION:15}
     redis:
-      registryKey: ${LOCK_REDIS_REGISTRY_KEY:lock00}
       hostname: ${LOCK_REDIS_HOSTNAME:localhost}
       port: ${LOCK_REDIS_PORT:6379}
       database: ${LOCK_REDIS_DATABASE:0}
+      registryKey: ${LOCK_REDIS_REGISTRY_KEY:lock00}
+      releaseTimeDuration: ${LOCK_RELEASE_TIME_DURATION:15}
   retry:
     maxAttempts: 2
     delay: 500
